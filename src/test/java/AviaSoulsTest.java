@@ -3,26 +3,56 @@ import org.junit.jupiter.api.Test;
 
 public class AviaSoulsTest {
 
+    Ticket ticket1 = new Ticket(
+            "Moscow",
+            "New York",
+            50_000,
+            1400,
+            2300
+
+    );
+
+    Ticket ticket2 = new Ticket(
+            "Moscow",
+            "New York",
+            60_000,
+            1500,
+            2350
+    );
+
+    Ticket ticket3 = new Ticket(
+            "Moscow",
+            "New York",
+            20_000,
+            600,
+            1200
+    );
+
+    Ticket ticket4 = new Ticket(
+            "Moscow",
+            "New York",
+            10_000,
+            2000,
+            800
+    );
+
+    Ticket ticket5 = new Ticket(
+            "Moscow",
+            "New York",
+            100_000,
+            2300,
+            430
+    );
+
     @Test
     public void ShouldCompareToTickets() {
-        Ticket ticket1 = new Ticket(
-                "Moscow",
-                "New York",
-                50_000,
-                1400,
-                2300
 
-        );
+        AviaSouls man = new AviaSouls();
 
-        Ticket ticket2 = new Ticket(
-                "Moscow",
-                "Barcelona",
-                30_000,
-                1500,
-                2000
-        );
+        man.add(ticket1);
+        man.add(ticket2);
 
-        int expected = 1;
+        int expected = - 1;
         int actual = ticket1.compareTo(ticket2);
 
 
@@ -34,36 +64,13 @@ public class AviaSoulsTest {
 
         AviaSouls man = new AviaSouls();
 
-        Ticket ticket1 = new Ticket(
-                "Moscow",
-                "New York",
-                50_000,
-                1400,
-                2300
-
-        );
-
-        Ticket ticket2 = new Ticket(
-                "Moscow",
-                "New York",
-                60_000,
-                1500,
-                2350
-        );
-
-        Ticket ticket3 = new Ticket(
-                "Moscow",
-                "New York",
-                20_000,
-                630,
-                1600
-        );
-
         man.add(ticket1);
         man.add(ticket2);
         man.add(ticket3);
+        man.add(ticket4);
+        man.add(ticket5);
 
-        Ticket[] expected = {ticket3, ticket1, ticket2};
+        Ticket[] expected = {ticket4, ticket3, ticket1, ticket2, ticket5};
         Ticket[] actual = man.search("Moscow", "New York");
 
         Assertions.assertArrayEquals(expected, actual);
@@ -71,26 +78,17 @@ public class AviaSoulsTest {
 
     @Test
     public void TicketTimeComparator() {
+
+        AviaSouls man = new AviaSouls();
+
         TicketTimeComparator timeComparator = new TicketTimeComparator();
 
-
-        int actual = timeComparator.compare(new Ticket(
-                "Moscow",
-                "New York",
-                50_000,
-                1400,
-                2300
-        ), new Ticket(
-                "Moscow",
-                "New York",
-                60_000,
-                1500,
-                2330
-        ));
+        man.add(ticket1);
+        man.add(ticket2);
 
         int expected = 1;
 
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, timeComparator.compare(ticket1, ticket2));
 
     }
 
@@ -98,39 +96,16 @@ public class AviaSoulsTest {
     public void searchAndSortBy() {
         AviaSouls man = new AviaSouls();
 
-        Ticket ticket1 = new Ticket(
-                "Moscow",
-                "New York",
-                50_000,
-                1400,
-                2300
-
-        );
-
-        Ticket ticket2 = new Ticket(
-                "Moscow",
-                "New York",
-                60_000,
-                1500,
-                2350
-        );
-
-        Ticket ticket3 = new Ticket(
-                "Moscow",
-                "New York",
-                20_000,
-                600,
-                1200
-        );
-
         man.add(ticket1);
         man.add(ticket2);
         man.add(ticket3);
+        man.add(ticket4);
+        man.add(ticket5);
 
         TicketTimeComparator timeComparator = new TicketTimeComparator();
 
-        Ticket[] expected = { ticket3, ticket2, ticket1};
-        Ticket[] actual = man.searchAndSortBy("Moscow", "New york", timeComparator);
+        Ticket[] expected = { ticket5, ticket3, ticket2, ticket1, ticket4};
+        Ticket[] actual = man.searchAndSortBy("Moscow", "New York", timeComparator);
 
         Assertions.assertArrayEquals(expected, actual);
     }
