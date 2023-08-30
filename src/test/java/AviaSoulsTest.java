@@ -44,6 +44,14 @@ public class AviaSoulsTest {
             430
     );
 
+    Ticket ticket6 = new Ticket(
+            "Moscow",
+            "Barcelona",
+            35_000,
+            1200,
+            1630
+    );
+
     @Test
     public void ShouldCompareToTickets() {
 
@@ -77,6 +85,42 @@ public class AviaSoulsTest {
     }
 
     @Test
+    public void ShouldSortOneTicket() {
+
+        AviaSouls man = new AviaSouls();
+
+        man.add(ticket1);
+        man.add(ticket2);
+        man.add(ticket3);
+        man.add(ticket4);
+        man.add(ticket5);
+        man.add(ticket6);
+
+        Ticket[] expected = {ticket6};
+        Ticket[] actual = man.search("Moscow", "Barcelona");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void ShouldSortNoTickets() {
+
+        AviaSouls man = new AviaSouls();
+
+        man.add(ticket1);
+        man.add(ticket2);
+        man.add(ticket3);
+        man.add(ticket4);
+        man.add(ticket5);
+        man.add(ticket6);
+
+        Ticket[] expected = {};
+        Ticket[] actual = man.search("Moscow", "Miami");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
     public void TicketTimeComparator() {
 
         AviaSouls man = new AviaSouls();
@@ -93,7 +137,7 @@ public class AviaSoulsTest {
     }
 
     @Test
-    public void searchAndSortBy() {
+    public void SearchAndSortBy() {
         AviaSouls man = new AviaSouls();
 
         man.add(ticket1);
@@ -108,6 +152,47 @@ public class AviaSoulsTest {
         Ticket[] actual = man.searchAndSortBy("Moscow", "New York", timeComparator);
 
         Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void SearchAndSortByOneTicket() {
+
+        AviaSouls man = new AviaSouls();
+
+        man.add(ticket1);
+        man.add(ticket2);
+        man.add(ticket3);
+        man.add(ticket4);
+        man.add(ticket5);
+        man.add(ticket6);
+
+        TicketTimeComparator timeComparator = new TicketTimeComparator();
+
+        Ticket[] expected = {ticket6};
+        Ticket[] actual = man.searchAndSortBy("Moscow", "Barcelona", timeComparator);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void SearchAndSortByNoTickets() {
+
+        AviaSouls man = new AviaSouls();
+
+        man.add(ticket1);
+        man.add(ticket2);
+        man.add(ticket3);
+        man.add(ticket4);
+        man.add(ticket5);
+        man.add(ticket6);
+
+        TicketTimeComparator timeComparator = new TicketTimeComparator();
+
+        Ticket[] expected = {};
+        Ticket[] actual = man.searchAndSortBy("Moscow", "Miami", timeComparator);
+
+        Assertions.assertArrayEquals(expected, actual);
+
     }
 
 }
